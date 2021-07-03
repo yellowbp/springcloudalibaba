@@ -6,13 +6,10 @@
         <module>order</module>
         <module>stock</module>
     </modules>
-    <parent>
-        <!--springboot版本仲裁管理-->
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.11.RELEASE</version>
-        <relativePath/>
-    </parent>
+
+    <!--以后公司开发中就可以用parent去继承公司自定义的父Maven项目-->
+    <!--<parent></parent>-->
+    
     <groupId>com.hbp</groupId>
     <artifactId>springcloudalibaba</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -34,6 +31,42 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <!--
+        dependencyManagement只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖。如果不在子项目中声明依赖，是不会从父项目中继承下来的；
+        只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring cloud alibaba的版本管理器，通过dependency来实现继承-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.2.5.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--springboot版本仲裁管理-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>2.3.2.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--spring cloud版本仲裁管理-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR8</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
